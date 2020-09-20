@@ -10,7 +10,7 @@ variable "aws_secret_key" {
 
 variable "aws_region" {
   type = string
-  description = "AWS region"
+  description = "us-east-2"
 }
 
 variable "instance_count" {
