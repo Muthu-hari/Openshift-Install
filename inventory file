@@ -1,0 +1,54 @@
+Create an OSEv3 group that contains the master, nodes, etcd, and lb groups.
+# The lb group lets Ansible configure HAProxy as the load balancing solution.
+# Comment lb out if your load balancer is pre-configured.
+[OSEv3:children]
+masters
+nodes
+etcd
+lb
+
+# Set variables common for all OSEv3 hosts
+[OSEv3:vars]
+openshift_deployment_type=openshift-enterprise
+
+# Native high availability cluster method with optional load balancer.
+# If no lb group is defined installer assumes that a load balancer has
+# been preconfigured. For installation the value of
+# openshift_master_cluster_hostname must resolve to the load balancer
+# or to one or all of the masters defined in the inventory if no load
+# balancer is present.
+openshift_master_cluster_method=native
+openshift_master_cluster_hostname=openshift-internal.example.com
+openshift_master_cluster_public_hostname=openshift-cluster.example.com
+
+# host group for masters
+[masters]
+master1.example.com
+master2.example.com
+master3.example.com
+
+# host group for etcd
+[etcd]
+master1.example.com
+master2.example.com
+master3.example.com
+
+# Infra Nodes
+[infra]
+infra1.example.com
+infra2.example.com
+
+# app nodes
+[app]
+app1.example.com
+app2.example.com
+
+# host group for nodes, includes region info
+[nodes]
+master1.example.com
+master2.example.com
+master3.example.com
+infra1.example.com
+infra2.example.com
+app1.example.com
+app2.example.com
